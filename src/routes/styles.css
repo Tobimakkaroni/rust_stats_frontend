@@ -1,52 +1,50 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+:root {
+    --bg-color-light: #f4f6f8;
+    --bg-color-dark: #121212;
+    --text-color-light: #333;
+    --text-color-dark: #f4f4f4;
+    --button-bg-light: #3498db;
+    --button-bg-dark: #1e40af;
+    --button-hover-light: #2980b9;
+    --button-hover-dark: #1e3a8a;
+    --input-bg-light: #fff;
+    --input-bg-dark: #333;
+    --input-border-light: #ddd;
+    --input-border-dark: #444;
+    --game-item-bg-light: #ecf0f1;
+    --game-item-bg-dark: #2c3e50;
+    --pagination-button-bg-light: #3498db;
+    --pagination-button-bg-dark: #1e40af;
+    --pagination-button-hover-light: #2980b9;
+    --pagination-button-hover-dark: #1e3a8a;
+    --stats-table-bg-light: #ecf0f1;
+    --stats-table-bg-dark: #2c3e50;
+  }
+
+  * {
     font-family: 'Inter', sans-serif;
   }
   
   body {
-    background-color: #f4f6f8;
-    color: #333;
+    background-color: var(--bg-color-light);
+    color: var(--text-color-light);
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  body[data-theme='dark'] {
+    background-color: var(--bg-color-dark);
+    color: var(--text-color-dark);
   }
   
   main {
-    max-width: 900px;
-    margin: 2rem auto;
-    padding: 1rem;
     background-color: #fff;
-    border-radius: 8px;
+    color: #333;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
   }
   
-  h1 {
-    text-align: center;
-    font-size: 2rem;
-    color: #2c3e50;
-    margin-bottom: 1.5rem;
-  }
-  
-  .form-container {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
-  }
-  
-  .search-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 1.5rem;
-  }
-  
-  input {
-    padding: 0.75rem;
-    font-size: 1rem;
-    width: 100%;
-    max-width: 300px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-bottom: 1rem;
+  body[data-theme='dark'] main {
+    background-color: #121212;
   }
   
   button {
@@ -55,22 +53,40 @@
     cursor: pointer;
     border: none;
     border-radius: 4px;
-  }
-  
-  .primary-button {
-    background-color: #3498db;
-    color: white;
     transition: background-color 0.3s ease;
   }
   
-  .primary-button:hover {
-    background-color: #2980b9;
+  .primary-button {
+    background-color: var(--button-bg-light);
+    color: white;
   }
   
-  .games-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  body[data-theme='dark'] .primary-button {
+    background-color: var(--button-bg-dark);
+  }
+  
+  .primary-button:hover {
+    background-color: var(--button-hover-light);
+  }
+  
+  body[data-theme='dark'] .primary-button:hover {
+    background-color: var(--button-hover-dark);
+  }
+  
+  input {
+    padding: 0.75rem;
+    font-size: 1rem;
+    width: 100%;
+    max-width: 300px;
+    border: 1px solid var(--input-border-light);
+    background-color: var(--input-bg-light);
+    border-radius: 4px;
+    margin-bottom: 1rem;
+  }
+  
+  body[data-theme='dark'] input {
+    background-color: var(--input-bg-dark);
+    border: 1px solid var(--input-border-dark);
   }
   
   .game-item {
@@ -78,51 +94,46 @@
     justify-content: space-between;
     padding: 0.75rem;
     margin-bottom: 0.5rem;
-    background-color: #ecf0f1;
+    background-color: var(--game-item-bg-light);
     border-radius: 4px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
   
-  .game-button {
-    background-color: transparent;
-    border: none;
-    color: #3498db;
-    font-size: 1rem;
-    text-align: left;
-    cursor: pointer;
-    transition: color 0.3s ease;
-  }
-  
-  .game-button:hover {
-    color: #2980b9;
-  }
-  
-  .pagination {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 1rem;
+  body[data-theme='dark'] .game-item {
+    background-color: var(--game-item-bg-dark);
   }
   
   .pagination-button {
     padding: 0.5rem 1rem;
     font-size: 1rem;
     cursor: pointer;
-    background-color: #3498db;
+    background-color: var(--pagination-button-bg-light);
     color: white;
     border: none;
     border-radius: 4px;
-    transition: background-color 0.3s ease;
+  }
+  
+  body[data-theme='dark'] .pagination-button {
+    background-color: var(--pagination-button-bg-dark);
   }
   
   .pagination-button:hover {
-    background-color: #2980b9;
+    background-color: var(--pagination-button-hover-light);
+  }
+  
+  body[data-theme='dark'] .pagination-button:hover {
+    background-color: var(--pagination-button-hover-dark);
   }
   
   .game-stats {
     margin-top: 2rem;
     padding: 1rem;
     border-radius: 4px;
-    background-color: #ecf0f1;
+    background-color: var(--stats-table-bg-light);
+  }
+  
+  body[data-theme='dark'] .game-stats {
+    background-color: var(--stats-table-bg-dark);
   }
   
   .stats-table {
@@ -140,6 +151,10 @@
   th {
     background-color: #3498db;
     color: white;
+  }
+  
+  body[data-theme='dark'] th {
+    background-color: #1e40af;
   }
   
   .no-games {

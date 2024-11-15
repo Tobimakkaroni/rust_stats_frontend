@@ -4,9 +4,17 @@
   let selectedGameStats: any = null;
   let selectedGame: string | null = null;
   let searchQuery: string = "";
-
   let currentPage: number = 1;
   const gamesPerPage: number = 5;
+
+  const toggleTheme = () => {
+    const currentTheme = document.body.getAttribute('data-theme');
+    if (currentTheme === 'dark') {
+      document.body.setAttribute('data-theme', 'light');
+    } else {
+      document.body.setAttribute('data-theme', 'dark');
+    }
+  };
 
   const fetchGames = async () => {
     if (!steamId) {
@@ -90,6 +98,10 @@
 
   <div class="search-container">
     <input type="text" bind:value={searchQuery} placeholder="Search for a game" />
+  </div>
+
+  <div class="theme-toggle">
+    <button class="primary-button" on:click={toggleTheme}>Toggle Dark/Light Mode</button>
   </div>
 
   {#if games}
