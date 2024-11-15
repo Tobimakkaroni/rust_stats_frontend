@@ -109,7 +109,7 @@
       {#each paginatedGames() as game}
         <li class="game-item">
           <button class="game-button" on:click={() => fetchGameStats(game.name)}>{game.name}</button>
-          <span class="playtime">- {minutesToHours(game.playtime_forever)} hours</span>
+          <span class="playtime">{minutesToHours(game.playtime_forever)} hours</span>
         </li>
       {/each}
     </ul>
