@@ -1,15 +1,15 @@
 <script lang="ts">
   import RadarChart from '$lib/RadarChart.svelte';
+  import type { ChartOptions } from 'chart.js';
   import { onMount } from 'svelte';
 
-  interface RadarChartData {
+  interface PolarAreaChartData {
     labels: string[];
     datasets: {
       label: string;
       data: number[];
-      fill: boolean;
-      backgroundColor: string;
-      borderColor: string;
+      backgroundColor: string[];
+      borderColor: string[];
       borderWidth: number;
     }[];
   }
@@ -22,41 +22,30 @@
   let currentPage: number = 1;
   const gamesPerPage: number = 5;
 
-  let chartData: RadarChartData = {
+  let chartData: PolarAreaChartData = {
     labels: [],
     datasets: []
   };
 
-  let chartOptions = {
+  let chartOptions: ChartOptions = {
     responsive: true,
-    scales: {
-      r: {
-        angleLines: {
-          display: false
-        },
-        suggestedMin: 0,
-        suggestedMax: 100,
-        ticks: {
-          callback: (value: number) => `${value}%`,
-        },
+    plugins: {
+      legend: {
+        position: 'right'
       },
-    },
+      tooltip: {
+        callbacks: {
+          label: function (context: any) {
+            return `${context.label}: ${context.raw}%`;
+          }
+        }
+      }
+    }
   };
 
   const normalizeData = (data: number[]): number[] => {
     const max = Math.max(...data);
     return data.map((value) => (value / max) * 100);
-  };
-
-  const smoothData = (data: number[], windowSize: number = 3): number[] => {
-    let smoothedData: number[] = [];
-    for (let i = 0; i < data.length; i++) {
-      const windowStart = Math.max(0, i - Math.floor(windowSize / 2));
-      const windowEnd = Math.min(data.length, i + Math.floor(windowSize / 2) + 1);
-      const window = data.slice(windowStart, windowEnd);
-      smoothedData.push(window.reduce((sum, value) => sum + value, 0) / window.length);
-    }
-    return smoothedData;
   };
 
   const toggleTheme = () => {
@@ -101,20 +90,23 @@
       selectedGameStats = data;
       selectedGame = gameName;
 
-      const rawData = data.stats.map((stat: { value: string }) => parseFloat(stat.value));
+      const rawData = data.stats.map((stat: { value: string }) =>
+        parseFloat(stat.value)
+      );
 
       const normalizedData = normalizeData(rawData);
-
-      const smoothedData = smoothData(normalizedData, 3);
 
       chartData = {
         labels: data.stats.map((stat: { name: string }) => stat.name),
         datasets: [{
           label: `Stats for ${gameName}`,
-          data: smoothedData,
-          fill: true,
-          backgroundColor: 'rgba(255, 99, 132, 0.2)',
-          borderColor: 'rgba(255, 99, 132, 1)',
+          data: normalizedData,
+          backgroundColor: normalizedData.map(() =>
+            `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.5)`
+          ),
+          borderColor: normalizedData.map(() =>
+            `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`
+          ),
           borderWidth: 1
         }]
       };
